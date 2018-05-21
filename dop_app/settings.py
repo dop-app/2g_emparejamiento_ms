@@ -87,7 +87,7 @@ DATABASES = {
         #'HOST': 'localhost',
         #'PASSWORD':'123',
         #'PORT': '',
-        'HOST': 'db',
+        'HOST': 'emparejamiento-db',
         'PORT': 5432
     }
 }
