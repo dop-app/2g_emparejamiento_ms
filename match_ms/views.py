@@ -9,8 +9,6 @@ from rest_framework import status
 from rest_framework import serializers
 from rest_framework import views
 from django.http import JsonResponse
-
-
 from match_ms.calcClass import CalcClass
 
 
@@ -43,11 +41,12 @@ def match(request):
                     if obj.state_user_two==0:
                         obj.state_user_two=serializer.data['state_user_one']
                     obj.save()
-                    if serializer.data['state_user_two']==1:
-                        rejected=UserAccepted.objects.create(id_user=obj.id_user_two, id_user_accepted=obj.id_user_one)
+                    if 'state_user_two' in serializer.data:
+                        if serializer.data['state_user_two']==1:
+                            rejected=UserAccepted.objects.create(id_user=obj.id_user_two, id_user_accepted=obj.id_user_one)
 
-                    elif serializer.data['state_user_one']==2:
-                        rejected=UserRejected.objects.create(id_user=obj.id_user_two, id_user_rejected=obj.id_user_one)
+                        elif serializer.data['state_user_one']==2:
+                            rejected=UserRejected.objects.create(id_user=obj.id_user_two, id_user_rejected=obj.id_user_one)
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
             elif created==0 and created2==0:
@@ -70,6 +69,20 @@ def match(request):
         queryset=UsersMatch.objects.all()
         serializer= UsersMatchSerializer(queryset,many=True)
         return Response(serializer.data)
+
+
+
+
+@api_view(['GET','DELETE'])
+def matchDetail(request,pk):
+    if request.method=='GET':
+        queryset=UsersMatch.objects.filter(id=pk)
+        serializer= UsersMatchSerializer(queryset,many=True)
+        return Response(serializer.data)
+    elif request.method=='DELETE':
+        queryset=UsersMatch.objects.get(id=pk)
+        queryset.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 

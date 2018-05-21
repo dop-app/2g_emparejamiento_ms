@@ -20,7 +20,6 @@ from rest_framework import routers
 
 
 router = routers.SimpleRouter()
-router.register(r'match', UsersMatchList)
 router.register(r'accepted', UserAcceptedList)
 router.register(r'rejected', UserRejectedList)
 
@@ -28,13 +27,11 @@ router.register(r'rejected', UserRejectedList)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^emparejamiento/$', match),
+    url(r'^emparejamiento/(?P<pk>[0-9]+)$', matchDetail),
     url(r'^emparejamiento/usuario/(?P<pk>[0-9]+)$', listMatchUser),
-    url(r'^emparejamiento/rechazados', listUsersRejected),
+    url(r'^emparejamiento/rechazados$', listUsersRejected),
     url(r'^emparejamiento/rechazados/usuario/(?P<pk>[0-9]+)$', listUserRejectedByUser),
     url(r'^emparejamiento/aceptados$', listUsersAccepted),
     url(r'^emparejamiento/aceptados/usuario/(?P<pk>[0-9]+)$', listUserAcceptedByUser),
-    url(r'^emparejamiento/posibles/(?P<pk>[0-9]+)$', possibleMatch),
-    url(r'^emparejamiento/filtrar-gustos', filterUserPleasures.as_view(), name='filter_user_pleasures'),
-
-
+    url(r'^emparejamiento/posibles/(?P<pk>[0-9]+)$', possibleMatch)
 ]

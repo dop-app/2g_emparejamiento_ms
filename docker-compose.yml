@@ -1,14 +1,14 @@
  version: '2'
 
  services:
-   web:
+   emparejamiento-ms:
      build: .
-     command: python3 manage.py runserver 0.0.0.0:8000
+     command: bash -c "sleep 40 && python3 manage.py runserver '0.0.0.0:4004'"
      ports:
-       - "8000:8000"
+       - "4004:4004"
      depends_on:
-       - db
-   db:
+       - emparejamiento-db
+   emparejamiento-db:
      image: postgres
      ports:
-       - "5432:5432"
+       - "5434:5432"
