@@ -107,12 +107,12 @@ def possibleMatch(request,pk):
     listFiltered=list(request.data['listUsers'])
 
     for accepted in serializerAccepted.data:
-        if accepted['id_user_accepted'] in listFiltered:
+        while accepted['id_user_accepted'] in listFiltered:
             listFiltered.remove(accepted['id_user_accepted'])
 
 
     for rejected in serializerRejected.data:
-        if rejected['id_user_rejected'] in listFiltered:
+        while rejected['id_user_rejected'] in listFiltered:
             listFiltered.remove(rejected['id_user_rejected'])
 
     return Response({'listUsersFiltered': listFiltered})
