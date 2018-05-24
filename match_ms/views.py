@@ -81,8 +81,9 @@ def matchDetail(request,pk):
         return Response(serializer.data)
     elif request.method=='DELETE':
         queryset=UsersMatch.objects.get(id=pk)
+        serializer= UsersMatchSerializer(queryset)
         queryset.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
 
 
 
